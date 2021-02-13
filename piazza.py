@@ -1,12 +1,11 @@
-import sys, os, discord
+import discord
 from piazza_api import Piazza
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
-from pprint import pprint
 
 ZERO_WHITE_SPACE = "\u200b"
 
-def piazza_parse(pi_url, EMAIL, PASSWD):
+def piazza_parse(pi_url, email, passwd):
     '''
     Called by connect.py to get post from Piazza.
     It will format the post json into a more readable message for server.
@@ -15,7 +14,7 @@ def piazza_parse(pi_url, EMAIL, PASSWD):
     # Create Piazza object, login, and get the users classes
     data = {}
     p = Piazza()
-    p.user_login(email=EMAIL, password=PASSWD)
+    p.user_login(email=email, password=passwd)
     classes = p.get_user_classes()
 
     # Parse the piazza url into components

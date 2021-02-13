@@ -1,4 +1,4 @@
-import os, discord, random, piazza
+import os, discord, piazza
 from dotenv import load_dotenv
 
 load_dotenv()
