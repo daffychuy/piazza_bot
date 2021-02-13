@@ -70,7 +70,7 @@ def piazza_parse(pi_url, EMAIL, PASSWD):
     return embed_creator(data, pi_url)
 
 def embed_creator(data, pi_url):
-    embed=discord.Embed(title=data['question'], url=pi_url, description=['question_text'], color=0x00fffb)
+    embed=discord.Embed(title=data['question'], url=pi_url, description=data['question_text'], color=0x00fffb)
     if data['answer']['student']:
         embed.add_field(name="Student(s) Answer", value=data['answer']['student'], inline=False)
     if data['answer']['instructor']:
