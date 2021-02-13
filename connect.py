@@ -25,7 +25,7 @@ async def on_message(message):
     if "piazza.com" in message.content:
         response = piazza.piazza_parse(message.content, EMAIL, PASSWD)
         await message.channel.send(embed=response)
-        await client.delete_message(message)
+        await message.delete()
     elif message.content == 'raise-exception':
         raise discord.DiscordException
 
