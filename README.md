@@ -1,8 +1,7 @@
 # PiazzaBot
-Discord bot to embed Piazza posts in the server
+Discord bot to embed Piazza posts in the destinated server
 
 ## About
-![](piazza_bot_demo.gif)
 
 PiazzaBot will give you a embeded preview of a Piazza post right on your server!
 Just enter in the link to the post, and PiazzaBot will take care of the rest! 
@@ -19,29 +18,21 @@ pip3 install -r requirements
 ```
 
 2. Export your environment variables as such
-```
-export EMAIL='{your email here}'
-export PASSWORD='{your password here}`
-export DISCORD_TOKEN='{your Discord Bot Token}'
-export GUILD_ID='{your server ID}'
-```
+Rename `.env.template` to `.env` and fill in all the fields defined in the file
+
 3. Then run the program with `python3 ./connect.py`
 
 NOTE: Your Piazza account must be enrolled in the class to get the embeded preview, or else
 it won't work.
 
-## Deployment
-This current repository is connected & deployed using Heroku. Any commits to the master branch
-will automatically be deployed.
 
 ## Built With
 - Python
 - [piazza-api](https://github.com/hfaran/piazza-api)
 - [discord.py](https://github.com/Rapptz/discord.py)
 
-## Contributors
-- [Zachary Zulanas](https://github.com/zzulanas)
-- [Gico Carlo Evangelista](https://github.com/RiceAbove)
+## Note
+This repository is a fork of [piazza_bot](https://github.com/zzulanas/piazza_bot) by zzulanas but modified to my person use and use embeds instead of plain text
 
 ## License
 This project is licensed under [MIT](LICENSE) - see the LICENSE file for details
