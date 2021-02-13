@@ -24,7 +24,7 @@ async def on_message(message):
     # Then send piazza post to server
     if "piazza.com" in message.content:
         response = piazza.piazza_parse(message.content, EMAIL, PASSWD)
-        await message.channel.send(response)
+        await message.channel.send(embed=response)
     elif message.content == 'raise-exception':
         raise discord.DiscordException
 
