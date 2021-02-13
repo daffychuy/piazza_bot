@@ -1,9 +1,11 @@
-import os, discord, random, test
+import os, discord, random, piazza
 from dotenv import load_dotenv
 
 load_dotenv()
-TOKEN = os.environ['DISCORD_TOKEN']
-GUILD = os.environ['GUILD']
+TOKEN = os.getenv['DISCORD_TOKEN']
+GUILD = os.getenv['GUILD']
+EMAIL = os.getenv['EMAIL']
+PASSWD = os.getenv['PASSWD']
 
 client = discord.Client()
 
@@ -18,20 +20,10 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # brooklyn 99 quotes just for fun
-    brooklyn_99_quotes = [
-        'I\'m the human form of the 💯 emoji.',
-        'Bingpot!',
-        (
-            'Cool. Cool cool cool cool cool cool cool, '
-            'no doubt no doubt no doubt no doubt.'
-        ),
-    ]
-
     # If message is a piazza link, call test.piazza_parse()
     # Then send piazza post to server
     if "piazza.com" in message.content:
-        response = test.piazza_parse(message.content)
+        response = piazza.piazza_parse(message.content, EMAIL, PASSWD)
         await message.channel.send(response)
     elif message.content == 'raise-exception':
         raise discord.DiscordException

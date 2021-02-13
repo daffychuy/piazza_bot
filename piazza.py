@@ -1,19 +1,19 @@
-import sys, os
+import sys, os, discord
 from piazza_api import Piazza
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from pprint import pprint
 
-def piazza_parse(pi_url):
+def piazza_parse(pi_url, EMAIL, PASSWD):
     '''
     Called by connect.py to get post from Piazza.
     It will format the post json into a more readable message for server.
     '''
 
     # Create Piazza object, login, and get the users classes
-    temp = ""
+    data = {}
     p = Piazza()
-    p.user_login(email=os.environ['EMAIL'], password=os.environ['PASSWORD'])
+    p.user_login(email=EMAIL, password=PASSWD)
     classes = p.get_user_classes()
 
     # Parse the piazza url into components
@@ -39,40 +39,31 @@ def piazza_parse(pi_url):
     question = post["history"][0]["content"]
     subject = post["history"][0]["subject"]
 
-    # Format class name, subject, and post content for Discord
-    temp += "__**CLASS NAME**__\n"
-    temp += class_name + '\n\n'
-    temp += "__**SUBJECT**__\n"
-    temp += subject + '\n\n'
-    temp += "__**CONTENT**__\n"
-    question_text = BeautifulSoup(question, features='lxml').text
-    temp += question_text + '\n\n'
-
+    # Format data to return
+    data.setdefault("class_name", class_name)
+    data.setdefault("question", subject)
+    # data.setdefault("subject", subject)
+    data.setdefault("question_text", BeautifulSoup(question, features='lxml').text)
+    data.setdefault("answer", {'instructor': None, 'student': None})
+    
+    
     # Get answers json
     answers = post["children"]
-    
-    # Init student and instructor json answers
-    s_answer_json = None
-    i_answer_json = None
 
     # Assign student and instructor answers if they exist
     for answer in answers:
         if answer['type'] == 's_answer':
-            s_answer_json = answer
+            data['answer']['student'] = BeautifulSoup(answer['history'][0]['content'], features='lxml').text
         elif answer['type'] == 'i_answer':
-            i_answer_json = answer
+            data['answer']['instructor'] = BeautifulSoup(answer['history'][0]['content'], features='lxml').text
 
-    # Format student and/or instructor answer if they exist
-    if s_answer_json is not None:
-        temp += "__**STUDENT ANSWER**__\n"
-        s_answer = s_answer_json['history'][0]['content']
-        s_answer_text = BeautifulSoup(s_answer, features='lxml').text
-        temp += s_answer_text + '\n\n'
+    return embed_creator(data, pi_url)
 
-    if i_answer_json is not None:
-        temp += "__**INSTRUCTOR ANSWER**__\n"
-        i_answer = i_answer_json['history'][0]['content']
-        i_answer_text = BeautifulSoup(i_answer, features='lxml').text
-        temp += i_answer_text
-
-    return temp
+def embed_creator(data, pi_url):
+    embed=discord.Embed(title=data.class_name, url=pi_url, color=0x00fffb)
+    embed.add_field(name=data.question, value=data.question_text, inline=False)
+    if data['answer']['student']:
+        embed.add_field(name="Student Answer", value=data['answer']['student'], inline=True)
+    if data['answer']['instructor']:
+        embed.add_field(name="Instructor Answer", value=data['answer']['instructor'], inline=True)
+    embed.set_footer(text=pi_url)
