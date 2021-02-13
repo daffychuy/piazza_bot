@@ -1,5 +1,5 @@
 # PiazzaBot
-Discord bot to embed Piazza posts in the destinated server
+Discord bot to embed Piazza posts in the designated server
 
 ## About
 
