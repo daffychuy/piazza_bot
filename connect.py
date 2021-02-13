@@ -2,10 +2,10 @@ import os, discord, random, piazza
 from dotenv import load_dotenv
 
 load_dotenv()
-TOKEN = os.getenv['DISCORD_TOKEN']
-GUILD = os.getenv['GUILD']
-EMAIL = os.getenv['EMAIL']
-PASSWD = os.getenv['PASSWD']
+TOKEN = os.environ['DISCORD_TOKEN']
+GUILD = os.environ['GUILD']
+EMAIL = os.environ['EMAIL']
+PASSWD = os.environ['PASSWD']
 
 client = discord.Client()
 
