@@ -41,10 +41,18 @@ def piazza_parse(pi_url, EMAIL, PASSWD):
 
     # Format data to return
     data.setdefault("class_name", class_name)
+    if not data['class_name']:
+        data['class_name'] = ""
     data.setdefault("question", subject)
+    if not data['question']:
+        data['question'] = ""
     # data.setdefault("subject", subject)
     data.setdefault("question_text", BeautifulSoup(question, features='lxml').text)
-    data.setdefault("answer", {'instructor': None, 'student': None})
+    if not data['question_text']:
+        data['question_text'] = ""
+    if not data['question_text']:
+        data['question'] = ''
+    data.setdefault("answer", {'instructor': '', 'student': ''})
     
     
     # Get answers json
