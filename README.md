@@ -32,7 +32,7 @@ it won't work.
 - [discord.py](https://github.com/Rapptz/discord.py)
 
 ## Note
-This repository is a fork of [piazza_bot](https://github.com/zzulanas/piazza_bot) by zzulanas but modified to my person use and use embeds instead of plain text
+This repository is a fork of [piazza_bot](https://github.com/zzulanas/piazza_bot) by zzulanas but modified to my personal use and use embeds instead of plain text
 
 ## License
 This project is licensed under [MIT](LICENSE) - see the LICENSE file for details
